@@ -4,15 +4,19 @@
 
 {% block content %}
 
-<section class="legal-section">
-    <div class="legal-inner">
-        <div class="legal-header">
-            <div class="hero-badge">Legal</div>
-            <h1 class="legal-title">Terms and Conditions</h1>
-            <p class="legal-updated">Last updated: September 2026</p>
-        </div>
+<section class="hero legal-hero">
+    <div class="legal-hero-inner">
+        <div class="hero-badge">Legal</div>
+        <h1 class="hero-title">
+            Terms and <em>Conditions</em>
+        </h1>
+        <p class="hero-subtitle">Last updated: September 2026</p>
+    </div>
+</section>
 
-        <div class="legal-card">
+<section class="features">
+    <div class="legal-content-inner">
+        <div class="feature-card legal-card">
             <p>
                 Welcome to Spendly. These Terms and Conditions ("Terms") govern your access to
                 and use of the Spendly personal expense tracking application ("Service"). By
@@ -74,10 +78,14 @@
                 your account settings.
             </p>
         </div>
+    </div>
+</section>
 
-        <p class="legal-switch">
-            <a href="{{ url_for('landing') }}">← Back to home</a>
-        </p>
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2 class="cta-title">Ready to take control?</h2>
+        <p class="cta-body">Join thousands of people who track their expenses with Spendly.</p>
+        <a href="{{ url_for('landing') }}" class="btn-primary">Back to home</a>
     </div>
 </section>
 
