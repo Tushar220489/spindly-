@@ -180,6 +180,69 @@
 .bar-travel { width: 58%; background: #4f7fd8; }
 .bar-bills { width: 45%; background: #8b5cf6; }
 
+/* ------------------------------------------------------------------ */
+/* "See how it works" modal                                            */
+/* ------------------------------------------------------------------ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 15, 15, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    z-index: 1000;
+}
+
+.modal-overlay[hidden] { display: none; }
+
+.modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    background: var(--ink);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: var(--paper);
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: background 0.2s;
+}
+
+.modal-close:hover { background: rgba(0, 0, 0, 0.75); }
+
+.modal-video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.modal-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
 @media (max-width: 700px) {
     .landing-stat-grid {
         grid-template-columns: 1fr;
