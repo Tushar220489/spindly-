@@ -1,41 +1,88 @@
-# CLAUDE.md
+Spendly is a lightweight personal expense tracker built with Flask and SQLite.
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Architecture
 
-## What this is
+spendly/
+├── app.py              # All routes — single file, no blueprints
+├── database/
+│   └── db.py           # SQLite helpers: get_db(), init_db(), seed_db()
+├── templates/
+│   ├── base.html       # Shared layout — all templates must extend this
+│   └── *.html          # One template per page
+├── static/
+│   ├── css/
+│   │   ├── style.css       # Global styles
+│   │   └── landing.css     # Landing-page-only styles
+│   └── js/
+│       └── main.js         # Vanilla JS only
+└── requirements.txt
+Where things belong:
 
-"Spendly" — a Flask-based personal expense tracker, built as a step-by-step learning scaffold. Routes and files carry `# Step N` comments marking a guided build sequence (DB setup, auth, expense CRUD). Most functionality is currently unimplemented stubs; treat comments like "Students will implement..." as the spec for what needs to be built, not as existing behavior.
+New routes → app.py only, no blueprints
+DB logic → database/db.py only, never inline in routes
+New pages → new .html file extending base.html
+Page-specific styles → new .css file, not inline <style> tags
+Code style
 
-## Commands
+Python: PEP 8, snake_case for all variables and functions
+Templates: Jinja2 with url_for() for every internal link — never hardcode URLs
+Route functions: one responsibility only — fetch data, render template, done
+DB queries: always use parameterized queries (? placeholders) — never f-strings in SQL
+Error handling: use abort() for HTTP errors, not bare return "error string"
+Tech constraints
 
-```bash
-# Activate the virtualenv (already created at venv/)
-source venv/bin/activate
+Flask only — no FastAPI, no Django, no other web frameworks
+SQLite only — no PostgreSQL, no SQLAlchemy ORM, no external DB
+Vanilla JS only — no React, no jQuery, no npm packages
+No new pip packages — work within requirements.txt as-is unless explicitly told otherwise
+Python 3.10+ assumed — f-strings and match statements are fine
+Subagent Policy
 
-# Install dependencies
+Always use a builtin explore subagent for codebase exploration before implementing any new feature
+Always use a subagent to verify test results after any implementation
+When asked to plan, delegate codebase research to a subagent before presenting the plan
+always use a builtin plan subagent in plan mode
+Commands
+
+# Setup
+python -m venv venv
+source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Run the dev server (http://localhost:5001, debug mode on)
+# Run dev server (port 5001)
 python app.py
 
-# Run tests
+# Run all tests
 pytest
 
-# Run a single test file / test
-pytest path/to/test_file.py
-pytest path/to/test_file.py::test_name
-```
+# Run a specific test file
+pytest tests/test_foo.py
 
-There is no build step, linter, or frontend tooling (no npm/webpack) — static assets in `static/` are served as-is by Flask.
+# Run a specific test by name
+pytest -k "test_name"
 
-## Architecture
+# Run tests with output visible
+pytest -s
+Implemented vs stub routes
 
-- **Single-file Flask app** (`app.py`): all routes live here directly on the `app` object — no blueprints, no app-factory pattern, no `models.py`/`config.py`. New routes should follow this same flat style unless the project grows enough to warrant splitting it up.
-- **Database layer** (`database/db.py`): currently an empty stub. It is meant to hold three functions per its header comment:
-  - `get_db()` — returns a SQLite connection with `row_factory` and foreign keys enabled
-  - `init_db()` — creates tables via `CREATE TABLE IF NOT EXISTS`
-  - `seed_db()` — inserts sample dev data
-  `database/` is a proper package (has `__init__.py`), so import as `from database.db import get_db`. No ORM is used — expect raw SQL via the stdlib `sqlite3` module. The resulting DB file is `expense_tracker.db` at the project root (already gitignored).
-- **Templates** (`templates/`, Jinja2): `base.html` is the shared layout (navbar, footer, font/CSS includes) that all pages extend via `{% block content %}`. Auth pages (`login.html`, `register.html`) already post to `/login` and `/register` and render an `error` block, but `app.py` only has GET handlers for those routes so far — POST handling, session/auth logic, and password hashing still need to be added.
-- **Static assets** (`static/`): `css/style.css` is a single stylesheet driven by CSS custom properties defined in `:root` (colors, fonts, spacing) — reuse these variables rather than hardcoding new values. `js/main.js` is an empty stub for future client-side behavior.
-- **Placeholder routes**: `/logout`, `/profile`, `/expenses/add`, `/expenses/<id>/edit`, `/expenses/<id>/delete` currently return plain strings ("coming in Step N") instead of real behavior — these are the main routes left to implement, and will depend on the database layer and auth/session state being built first.
+Route	Status
+GET /	Implemented — renders landing.html
+GET /register	Implemented — renders register.html
+GET /login	Implemented — renders login.html
+GET /logout	Stub — Step 3
+GET /profile	Stub — Step 4
+GET /expenses/add	Stub — Step 7
+GET /expenses/<id>/edit	Stub — Step 8
+GET /expenses/<id>/delete	Stub — Step 9
+Do not implement a stub route unless the active task explicitly targets that step.
+
+Warnings and things to avoid
+
+Never use raw string returns for stub routes once a step is implemented — always render a template
+Never hardcode URLs in templates — always use url_for()
+Never put DB logic in route functions — it belongs in database/db.py
+Never install new packages mid-feature without flagging it — keep requirements.txt in sync
+Never use JS frameworks — the frontend is intentionally vanilla
+database/db.py is currently empty — do not assume helpers exist until the step that implements them
+FK enforcement is manual — SQLite foreign keys are off by default; get_db() must run PRAGMA foreign_keys = ON on every connection
+The app runs on port 5001, not the Flask default 5000 — don't change this
