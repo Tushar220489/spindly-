@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Terms and Conditions — Spendly{% endblock %}
+
+{% block content %}
+
+<section class="hero legal-hero">
+    <div class="legal-hero-inner">
+        <div class="hero-badge">Legal</div>
+        <h1 class="hero-title">
+            Terms and <em>Conditions</em>
+        </h1>
+        <p class="hero-subtitle">Last updated: September 2026</p>
+    </div>
+</section>
+
+<section class="features">
+    <div class="legal-content-inner">
+        <div class="feature-card legal-card">
+            <p>
+                Welcome to Spendly. These Terms and Conditions ("Terms") govern your access to
+                and use of the Spendly personal expense tracking application ("Service"). By
+                creating an account or using the Service, you agree to be bound by these Terms.
+                If you do not agree, please do not use the Service.
+            </p>
+
+            <h2>1. Acceptance of Terms</h2>
+            <p>
+                By registering for an account, accessing, or using Spendly in any way, you
+                confirm that you have read, understood, and agree to be bound by these Terms
+                and any policies referenced within them. We may update these Terms from time to
+                time, and your continued use of the Service after changes take effect
+                constitutes acceptance of the revised Terms.
+            </p>
+
+            <h2>2. Use of Service</h2>
+            <p>
+                Spendly is intended to help you log, categorize, and review your personal
+                expenses. You agree to use the Service only for lawful purposes and in
+                accordance with these Terms. You are responsible for maintaining the
+                confidentiality of your account credentials and for all activity that occurs
+                under your account. You agree not to misuse the Service, including but not
+                limited to attempting unauthorized access, interfering with its normal
+                operation, or using it to store or transmit unlawful content.
+            </p>
+
+            <h2>3. User Data</h2>
+            <p>
+                The Service allows you to input financial information such as expense amounts,
+                categories, dates, and descriptions. This data is stored to provide you with
+                tracking and reporting features within the Service. You retain ownership of the
+                data you submit. We take reasonable measures to protect your data, but you
+                acknowledge that no method of electronic storage or transmission is completely
+                secure. You are responsible for the accuracy of the information you enter, as
+                Spendly does not independently verify user-submitted financial data.
+            </p>
+
+            <h2>4. Limitations of Liability</h2>
+            <p>
+                Spendly is provided on an "as is" and "as available" basis, without warranties
+                of any kind, express or implied. Spendly is a personal tracking tool and does
+                not constitute financial, tax, or legal advice. To the fullest extent permitted
+                by law, Spendly and its contributors shall not be liable for any indirect,
+                incidental, special, or consequential damages, or for any loss of data, profits,
+                or financial decisions made in reliance on information within the Service.
+            </p>
+
+            <h2>5. Changes to Terms</h2>
+            <p>
+                We may revise these Terms at any time to reflect changes to the Service or for
+                legal, regulatory, or operational reasons. When we make material changes, we
+                will update the "Last updated" date above. Your continued use of Spendly after
+                any such changes constitutes your acceptance of the new Terms.
+            </p>
+
+            <p class="legal-contact">
+                If you have questions about these Terms, please contact the Spendly team through
+                your account settings.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2 class="cta-title">Ready to take control?</h2>
+        <p class="cta-body">Join thousands of people who track their expenses with Spendly.</p>
+        <a href="{{ url_for('landing') }}" class="btn-primary">Back to home</a>
+    </div>
+</section>
+
+{% endblock %}
