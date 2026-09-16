@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — Spendly{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="profile-section">
+    <div class="profile-container">
+
+        <div class="profile-header">
+            <h1 class="profile-title">{{ user['name'] }}</h1>
+            <p class="profile-subtitle">{{ user['email'] }}</p>
+        </div>
+
+        <div class="profile-summary-card">
+            <span class="profile-summary-label">Total spent</span>
+            <span class="profile-summary-value">${{ "%.2f"|format(total_spent) }}</span>
+        </div>
+
+        <div class="profile-expenses">
+            <div class="profile-expenses-header">
+                <h2>Expenses</h2>
+                <a href="{{ url_for('add_expense') }}" class="btn-primary">Add Expense</a>
+            </div>
+
+            {% if expenses %}
+            <ul class="expense-list">
+                {% for expense in expenses %}
+                <li class="expense-row">
+                    <div class="expense-info">
+                        <span class="expense-category">{{ expense['category'] }}</span>
+                        <span class="expense-description">{{ expense['description'] or '' }}</span>
+                        <span class="expense-date">{{ expense['date'] }}</span>
+                    </div>
+                    <div class="expense-amount">${{ "%.2f"|format(expense['amount']) }}</div>
+                    <div class="expense-actions">
+                        <a href="{{ url_for('edit_expense', id=expense['id']) }}">Edit</a>
+                        <a href="{{ url_for('delete_expense', id=expense['id']) }}">Delete</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="expense-empty">No expenses yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
