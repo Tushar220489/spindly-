@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import date
 
-from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 DB_PATH = "expense_tracker.db"
 
@@ -93,3 +93,15 @@ def create_user(name, email, password):
     user_id = cursor.lastrowid
     conn.close()
     return user_id
+
+
+def authenticate_user(email, password):
+    conn = get_db()
+    user = conn.execute(
+        "SELECT * FROM users WHERE email = ?", (email,)
+    ).fetchone()
+    conn.close()
+
+    if user and check_password_hash(user["password_hash"], password):
+        return user
+    return None
