@@ -6,7 +6,9 @@ from database.db import (
     authenticate_user,
     create_user,
     get_db,
+    get_expenses_by_user,
     get_user_by_email,
+    get_user_by_id,
     init_db,
     seed_db,
 )
@@ -88,13 +90,24 @@ def logout():
     return redirect(url_for("landing"))
 
 
+@app.route("/profile")
+def profile():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = get_user_by_id(user_id)
+    expenses = get_expenses_by_user(user_id)
+    total_spent = sum(expense["amount"] for expense in expenses)
+
+    return render_template(
+        "profile.html", user=user, expenses=expenses, total_spent=total_spent
+    )
+
+
 # ------------------------------------------------------------------ #
 # Placeholder routes — students will implement these                  #
 # ------------------------------------------------------------------ #
-
-@app.route("/profile")
-def profile():
-    return "Profile page — coming in Step 4"
 
 
 @app.route("/expenses/add")
